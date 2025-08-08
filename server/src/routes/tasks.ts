@@ -1,20 +1,24 @@
 import { Router } from 'express';
 import pool from '../db';
+import { authenticateToken } from '../middleware/auth';
 
 const router = Router();
 
-router.get('/', async (req, res) => {
-  const { user_id } = req.query;
+router.use(authenticateToken);
 
+router.get('/', async (req: any, res) => {
+  const user_id = req.user.user_id;
   try {
     const result = await pool.query(
-      "SELECT * FROM tasks WHERE user_id = $1 ORDER BY created_at DESC",
+      'SELECT * FROM tasks WHERE user_id = $1 ORDER BY created_at DESC',
       [user_id]
     );
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao obter tarefas' });
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error('Error when searching for tasks:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
-  res.send('Lista de tarefas');
 });
 
 router.post('/', async (req, res) => {
@@ -26,8 +30,8 @@ router.post('/', async (req, res) => {
       [user_id, title]
     );
     res.json(result.rows[0]);
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao criar tarefa' });
+  } catch (err) {
+    res.status(500).json({ error: 'Error creating task' });
   }
 });
 
@@ -41,11 +45,11 @@ router.put('/:id', async (req, res) => {
       [title, completed, id]
     );
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Tarefa não encontrada" });
+      return res.status(404).json({ error: "Task not found" });
     }
     res.json(result.rows[0]);
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao atualizar tarefa' });
+  } catch (err) {
+    res.status(500).json({ error: 'Error updating task' });
   }
 });
 
@@ -58,11 +62,11 @@ router.delete('/:id', async (req, res) => {
       [id]
     );
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Tarefa não encontrada" });
+      return res.status(404).json({ error: "Task not found" });
     }
-    res.json({ message: "Tarefa removida" });
-  } catch (error) {
-    res.status(500).json({ error: 'Erro ao apagar tarefa' });
+    res.json({ message: "Task removed" });
+  } catch (err) {
+    res.status(500).json({ error: 'Error deleting task' });
   }
 });
 
