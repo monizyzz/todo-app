@@ -16,7 +16,7 @@ export default function Register() {
     setError("");
 
     if (password !== confirmPassword) {
-      setError("Passwords do not match.")
+      setError("Passwords do not match.");
       setConfirmPassword("");
       return;
     }
@@ -27,7 +27,7 @@ export default function Register() {
       if (response.data?.error) {
         setError(response.data.error);
         return;
-      }    
+      }
 
       const { token } = response.data;
       setToken(token);
@@ -48,51 +48,53 @@ export default function Register() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 border rounded shadow">
-      <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
-      {error && <p className="text-red-500 mb-4">{error}</p>}
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-        <input
-          type="email"
-          placeholder="Email"
-          className="border p-2 rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full mx-auto p-6 border rounded shadow bg-white">
+        <h1 className="text-2xl font-bold mb-4">Sign Up</h1>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <input
+            type="email"
+            placeholder="Email"
+            className="border p-2 rounded"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="border p-2 rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
+          <input
+            type="password"
+            placeholder="Password"
+            className="border p-2 rounded"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          className="border p-2 rounded"
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          required
-        />
+          <input
+            type="password"
+            placeholder="Confirm Password"
+            className="border p-2 rounded"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            required
+          />
 
-        <button
-          type="submit"
-          className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
-        >
-          Sign Up
-        </button>
-      </form>
+          <button
+            type="submit"
+            className="bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          >
+            Sign Up
+          </button>
+        </form>
 
-      <p className="text-gray-400 pt-3">
-        Already have an account?{" "}
-        <Link to="/login" className="hover:text-blue-600 cursor-pointer">
-          Login
-        </Link>
-      </p>
+        <p className="text-gray-400 pt-3">
+          Already have an account?{" "}
+          <Link to="/login" className="hover:text-blue-600 cursor-pointer">
+            Login
+          </Link>
+        </p>
+      </div>
     </div>
   );
 }
