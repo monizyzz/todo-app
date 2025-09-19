@@ -17,6 +17,7 @@ A complete task management application with user authentication, built with Reac
 todo-app/
 ├── client/          # Frontend React + TypeScript
 ├── server/          # Backend Node.js + Express
+├── package.json     # Root package.json with unified scripts
 └── README.md
 ```
 
@@ -26,9 +27,16 @@ todo-app/
 - PostgreSQL
 - npm or yarn
 
-## Setup
+## Quick Start
 
-### 1. Database
+### 1. Install Dependencies
+
+```bash
+# Install all dependencies (root, client, and server)
+npm run install:all
+```
+
+### 2. Database Setup
 
 Create a PostgreSQL database and run the following SQL:
 
@@ -55,12 +63,7 @@ CREATE TABLE tasks (
 );
 ```
 
-### 2. Backend
-
-```bash
-cd server
-npm install
-```
+### 3. Environment Configuration
 
 Create a `.env` file in the `server/` folder:
 
@@ -70,32 +73,40 @@ JWT_SECRET=your_jwt_secret_key_here
 PORT=5000
 ```
 
-### 3. Frontend
+## Available Commands
 
+### Development (Development Mode)
 ```bash
-cd client
-npm install
-```
-
-## Running the Application
-
-### Backend
-
-```bash
-cd server
+# Run both frontend and backend in development mode
 npm run dev
 ```
+- **Frontend**: `http://localhost:5173` (Vite dev server)
+- **Backend**: `http://localhost:5000` (Nodemon with hot reload)
 
-The server will run on `http://localhost:5000`
-
-### Frontend
-
+### Production Build
 ```bash
-cd client
-npm run dev
+# Build both frontend and backend for production
+npm run build
 ```
+- Compiles TypeScript to JavaScript
+- Creates optimized production bundles
+- Outputs to `client/dist/` and `server/dist/`
 
-The application will run on `http://localhost:5173` (or 5174 if 5173 is busy)
+### Production Start (Final Version)
+```bash
+# Run the final production version
+npm run start
+```
+- **Frontend**: `http://localhost:4173` (Vite preview server)
+- **Backend**: `http://localhost:5000` (Node.js production server)
+
+### Individual Commands
+- `npm run dev:client` - Run only frontend in development
+- `npm run dev:server` - Run only backend in development
+- `npm run build:client` - Build only frontend
+- `npm run build:server` - Build only backend
+- `npm run start:client` - Run only frontend in production
+- `npm run start:server` - Run only backend in production
 
 ## How to Use
 
@@ -112,7 +123,7 @@ The application will run on `http://localhost:5173` (or 5174 if 5173 is busy)
 
 ### Frontend
 
-- React 18
+- React 19
 - TypeScript
 - Vite
 - Tailwind CSS

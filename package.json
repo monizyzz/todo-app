@@ -1,0 +1,24 @@
+{
+  "name": "todo-app-fullstack",
+  "version": "1.0.0",
+  "description": "Fullstack Todo App with React frontend and Node.js backend",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:client": "cd client && npm run dev",
+    "dev:server": "cd server && npm run dev",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "cd client && npm run build",
+    "build:server": "cd server && npm run build",
+    "install:all": "npm install && cd client && npm install && cd ../server && npm install",
+    "start": "concurrently \"npm run start:server\" \"npm run start:client\"",
+    "start:client": "cd client && npm run preview",
+    "start:server": "cd server && npm start"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "keywords": ["todo", "react", "nodejs", "typescript", "fullstack"],
+  "author": "",
+  "license": "ISC"
+}
